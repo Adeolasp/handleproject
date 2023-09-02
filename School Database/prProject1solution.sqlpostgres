@@ -1,0 +1,232 @@
+School Database: School_DB
+
+CREATE TABLE Student(
+Stud_id int, 
+Fname varchar (50) not null,
+Lname VARCHAR (50) not null,
+DOB date not null,
+CITY VARCHAR(50) not null,
+State  VARCHAR(50) not null,
+Instr_id VARCHAR (6) not null,
+Phone VARCHAR(10) not null,
+Gender VARCHAR(1) not null);
+
+CREATE TABLE Instructor(
+Instr_id varchar (6) not null,
+Fname VARCHAR (50) not null,
+Lname VARCHAR (50) not null,
+Course_id VARCHAR (6) not null
+);
+
+CREATE TABLE Course(
+Course_id varchar (6) not null,
+Course_name VARCHAR (6) not null,
+Course_credit int not null,
+Class_size int null
+);
+
+CREATE TABLE Student_leadership(
+Stud_exec_id int not null,
+Fname VARCHAR (50) not null,
+Lname VARCHAR (50) not null,
+Stud_id int not null,
+Title varchar (50) not null
+);
+
+CREATE TABLE Grade(
+Letter_Grade varchar (1) not null,
+Score int not null
+);
+
+CREATE TABLE Student_Grade(
+Stud_id int not null,
+Letter_Grade varchar (1) not null,
+Course_id varchar (6) not null,
+Instr_id VARCHAR (15) not null
+);
+--- Assigning PK to the table
+ALTER table student
+ADD Constraint stud_id  PRIMARY KEY(stud_id);
+
+ALTER table instructor
+ADD Constraint Instr_id  PRIMARY KEY(Instr_id);
+
+ALTER table course
+ADD Constraint course_id  PRIMARY KEY(course_id);
+
+ALTER table student_leadership
+ADD Constraint stud_exec_id  PRIMARY KEY(stud_exec_id);
+
+ALTER table student_grade
+ADD Constraint stud_id_student_grade PRIMARY KEY(stud_id);
+
+ALTER table Grade
+ADD Constraint letter_grade_Grade PRIMARY KEY(letter_grade);
+
+----- Assigning FK to the table
+
+ALTER TABLE INSTRUCTOR 
+ADD CONSTRAINT FK_COURSE_ID_INSTRUCTOR FOREIGN KEY (COURSE_ID)
+REFERENCES COURSE(COURSE_ID);
+
+ALTER TABLE student
+add CONSTRAINT FK_Instr_id_Student FOREIGN key (instr_id)
+References Instructor(instr_id);
+
+ALTER TABLE student_leadership
+ADD CONSTRAINT FK_Stud_id_student_leadership FOREIGN KEY (Stud_id)
+REFERENCES Student(stud_id);
+
+ALTER TABLE student_Grade
+ADD CONSTRAINT FK_letter_grade_Student_Grade FOREIGN KEY (letter_grade)
+REFERENCES Grade(letter_grade);
+
+ALTER TABLE student_Grade
+ADD CONSTRAINT FK_course_id_Student_Grade FOREIGN KEY (course_id)
+REFERENCES Course (course_id);
+
+ALTER TABLE student_Grade
+ADD CONSTRAINT FK_Instr_id_Student_Grade FOREIGN KEY (Instr_id)
+REFERENCES Instructor (Instr_id);
+
+--school IT Dept
+
+ALTER TABLE grade
+Alter column Score TYPE varchar (20);
+
+--INSERTING DATA INTO TABLE
+TABLE grade:
+INSERT INTO GRADE VALUES
+('A', '90 - 100'), 
+('B', '85 – 89'), 
+('C', '80 - 84'), 
+('D', '70 – 79'),
+('E', '60 - 69'), 
+('F', '0 - 59');
+
+TABLE COURSE:
+INSERT INTO COURSE VALUES
+('Soc101','Fundamentals of Sociology','3','30'), 
+('Mat102','Elementary Calculus','3','25'),
+('His304','Intermediate US History','3','15'), 
+('Soc401', 'Advanced Sociology','3','40'),
+('Phi400', 'Advanced Philosophy','3','20'); 
+
+ALTER TABLE COURSE
+ALTER COLUMN COURSE_NAME type VARCHAR(35);
+
+TABLE INSTRUCTOR:
+INSERT INTO INSTRUCTOR VALUES
+('In10001','Adeleye','Adewuyi','Mat102'), 
+('In10002','Martin','Gold','Phi400'),
+('In10003','Fatiu','Ahmed','Soc101'), 
+('In10004','Bharath','Mandadi','His304'),
+('In10005','Eric','Forson','Soc401'); 
+
+ALTER TABLE INSTRUCTOR
+ALTER COLUMN instr_id type VARCHAR(15);
+
+TABLE STUDENT:
+INSERT INTO STUDENT VALUES 
+('1','Joseph','Ahene','11/25/1980','Baltimore','Maryland','In10004','4321053421','M'), 
+('2','Precious','Owusu','09/11/1982','Columbia','Maryland','In10003','4321762243','F'),
+('3','Eni','Edo','01/06/1979','Bronx','New York', 'In10002','5011053421','F'), 
+('4','Felix','Emeka','12/01/1984','Newark','New Jersey','In10005','7011762243','M'),
+('5','Mercy','Johnson','04/20/1981','Wilmington','Delaware','In10005','3011053421','F'), 
+('6','Lilian','Asong','08/19/1986','Owings Mills','Maryland','In10003','4321761432', 'F'),
+('7', 'Prince', 'Williams', '06/04/1989', 'Silver Spring', 'Maryland', 'In10004', '4324432211','M'), 
+('8','Grace', 'Bonnie', '05/13/1985', 'Knoxville', 'Tennessee', 'In10001', '8651762243', 'F'), 
+('9', 'Leomie', 'Titus', '05/20/1986', 'Nashville', 'Tennessee', 'In10001', '8651053421', 'F'), 
+('10', 'Magic','Johnson', '09/01/1978', 'Falls Church', 'Virginia', 'In10002', '7241762243', 'M'), 
+('11', 'Henry', 'Edwards', '02/12/1983', 'Boston', 'Massachusetts', 'In10002', '9031053421', 'M'), 
+('12', 'George', 'Phillips', '12/04/1980', 'San Francisco', 'California', 'In10001', '4631762241', 'M'),
+('13', 'Frederick', 'Benson', '01/01/1978', 'Wilmington', 'Delaware', 'In10003', '3011222411', 'M'), 
+('14', 'Christy', 'Jones', '10/10/1991', 'Frederick', 'Maryland', 'In10005', '4321764444', 'F'),
+('15', 'Princess', 'Brown', '06/04/1989', 'Tulsa', 'Oklahoma', 'In10001', '4234432211', 'F'), 
+('16', 'Hillary', 'Morgan', '11/13/1990', 'Tampa', 'Florida', 'In10001', '6411765432', 'F');
+
+ALTER TABLE STUDENT
+ALTER COLUMN DOB type VARCHAR(15);
+
+ALTER TABLE STUDENT
+ALTER COLUMN instr_id type VARCHAR(15);
+
+TABLE STUDENT_GRADE.
+INSERT INTO student_grade(Stud_id, LETTER_GRADE, COURSE_ID)
+VALUES
+('1','A','Soc401'),
+('2','B','Phi400'),
+('3','B','His304'),
+('4','A','Mat102'),
+('5','C','Soc101'), 
+('6','D','His304'),
+('7','B','Phi400'), 
+('8','A','Mat102'),
+('9','C','Soc401'), 
+('10','A','Mat102'),
+('11','D','His304'), 
+('12','F','Soc101'),
+('13','A','Mat102'), 
+('14','A','His304'),
+('15','B','Mat102'),
+('16','C','His304');
+
+Drop TABLE student_grade;
+SELECT * from student_grade;
+
+ALTER TABLE student_grade
+ALTER COLUMN instr_id DROP NOT NULL;
+
+ALTER TABLE student_grade
+ALTER COLUMN instr_id SET NOT NULL;
+
+ALTER TABLE student_grade
+drop column instr_id;
+
+ALTER table student_grade
+ADD column Instr_id varchar(15);
+
+-- i make the Instr_id null
+
+ALTER TABLE student_grade
+ALTER COLUMN INSTR_ID type VARCHAR(15);
+
+ALTER TABLE instructor
+ALTER COLUMN INSTR_ID type VARCHAR(15);
+
+ALTER TABLE student
+ALTER COLUMN INSTR_ID type VARCHAR(15);
+
+SELECT* from Student_grade;
+
+UPDATE student_grade
+SET instr_id= Instructor.instr_id
+FROM instructor
+where student_grade.course_id=instructor.course_id; 
+
+
+TABLE STUDENTLEADERSHIP:
+INSERT INTO student_leadership(Stud_id, STUD_EXEC_ID, TITLE)
+VALUES
+('7','100','President'), 
+('2','101','Vice President'), 
+('4','103','Secretary'), 
+('3','104','Treasurer'),
+('11','105','Advisor'), 
+('16','106','Organizer');
+
+ -- I make the fname & Lname null value
+ SELECT * from student_leadership;
+ 
+ UPDATE student
+SET lname = 'BASONG'
+WHERE stud_ID = 6;
+
+Select * from STUDENT;
+ 
+UPDATE STUDENT_LEADERSHIP
+SET FNAME= STUDENT.FNAME, LNAME= STUDENT.LNAME
+FROM STUDENT
+WHERE STUDENT_LEADERSHIP.STUD_ID=STUDENT.STUD_ID;
+
+
